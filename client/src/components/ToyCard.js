@@ -17,7 +17,7 @@ function ToyCard({ toy, onDeleteToy, onUpdateToy }) {
     const updateObj = {
       likes: toy.likes + 1,
     };
-
+  
     fetch(`/toys/${id}`, {
       method: "PATCH",
       headers: {
@@ -26,8 +26,13 @@ function ToyCard({ toy, onDeleteToy, onUpdateToy }) {
       body: JSON.stringify(updateObj),
     })
       .then((r) => r.json())
-      .then((updatedToy) => onUpdateToy(updatedToy));
+      .then((updatedToy) => {
+        console.log("Response from server:", updatedToy);
+        onUpdateToy(updatedToy);
+      })
+      .catch((error) => console.log("Error:", error));
   }
+  
 
   return (
     <div className="card">

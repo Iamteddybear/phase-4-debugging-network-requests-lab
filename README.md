@@ -1,73 +1,45 @@
-# Putting it All Together: Client-Server Communication
+Your Notes Here
+Add a new toy when the toy form is submitted
 
-## Learning Goals
+How I debugged:
 
-- Understand how to communicate between client and server using fetch, and how
-  the server will process the request based on the URL, HTTP verb, and request
-  body
-- Debug common problems that occur as part of the request-response cycle
+after clicking on the create new toy button got
 
-## Introduction
+NameError (uninitialized constant ToysController::Toys):
 
-Just like the last lesson, we've got code for a React frontend and Rails API
-backend set up. This time though, it's up to you to use your debugging skills to
-find and fix the errors!
+app/controllers/toys_controller.rb:10:in `create'
 
-To get the backend set up, run:
+in the terminal, then went to toys_controller.rb
 
-```console
-$ bundle install
-$ rails db:migrate db:seed
-$ rails s
-```
+and realsied that 
 
-Then, in a new terminal, run the frontend:
+ def create
+    toy = Toys.create(toy_params)
+    render json: toy, status: :created
+  end
+  
+  should be
 
-```console
-$ npm install --prefix client
-$ npm start --prefix client
-```
+  def create
+    toy = Toy.create(toy_params)
+    render json: toy, status: :created
+  end
 
-Confirm both applications are up and running by visiting
-[`localhost:4000`](http://localhost:4000) and viewing the list of toys in your
-React application.
+Update the number of likes for a toy
 
-## Deliverables
+How I debugged:
 
-In this application, we have the following features:
+i updated the params of the toys_controller.rb
 
-- Display a list of all the toys
-- Add a new toy when the toy form is submitted
-- Update the number of likes for a toy
-- Donate a toy to Goodwill (and delete it from our database)
+private
+  
+  def toy_params
+    params.permit(:id, :name, :image, :likes)
+  end
 
-The code is in place for all these features on our frontend, but there are some
-problems with our API! We're able to display all the toys, but the other three
-features are broken.
+  it only updates after a page re-load
 
-Use your debugging tools to find and fix these issues.
 
-There are no tests for this lesson, so you'll need to do your debugging in the
-browser and using the Rails server logs and `byebug`.
+Donate a toy to Goodwill (and delete it from our database)
 
-**Note**: You shouldn't need to modify any of the React code to get the
-application working. You should only need to change the code for the Rails API.
-
-As you work on debugging these issues, use the space in this README file to take
-notes about your debugging process. Being a strong debugger is all about
-developing a process, and it's helpful to document your steps as part of
-developing your own process.
-
-## Your Notes Here
-
-- Add a new toy when the toy form is submitted
-
-  - How I debugged:
-
-- Update the number of likes for a toy
-
-  - How I debugged:
-
-- Donate a toy to Goodwill (and delete it from our database)
-
-  - How I debugged:
+How I debugged: I added destroy to the routes resources 
